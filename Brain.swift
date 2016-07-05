@@ -12,12 +12,38 @@ class Brain {
     
     private var accumulator: Double = 0
     
+    // keeps track of the sequence of operands and operations passed into the calculator
+    private var sequence: [String] = []
+    
+    var description: String {
+        get {
+            if sequence.count == 0 {
+                return " "
+            } else {
+                var result = ""
+                for o in sequence {
+                    result = result + "\(o) "
+                }
+                return result
+            }
+        }
+    }
+    
+    // return true if there are still pending operations, such as +, -, /, *
+    private var isPartialResult: Bool {
+        get {
+            return pendingOperation != nil
+        }
+    }
+    
+    // the output of the calculator
     var result: Double {
         get {
             return accumulator
         }
     }
     
+    // the input of the calculator
     func setOperand(operand: Double) {
         accumulator = operand
     }
@@ -41,18 +67,32 @@ class Brain {
     }
     
     func performOperation(symbol: String) {
+        
         if let operation = operations[symbol] {
             switch operation {
             case .BinaryOperation(let function):
+                
+                // Populate the sequence
+                sequence.append(String(accumulator))
+                sequence.append(symbol)
+                sequence.append("...")
+                
                 // if before performing this operation, we have another binary operation, then we should perform it and get the result as the 1st operand
                 if (pendingOperation != nil) {
                     executePendingOperation()
                 }
                 pendingOperation = PendingBinaryOperation(binaryOperation: function, firstOperand: accumulator)
+                
             case .Constant(let num):
                 accumulator = num
             case .UnaryOperation(let function):
+                
+                // Populate the sequence
+                sequence.append(symbol)
+                sequence.append("(\(accumulator))")
+                
                 accumulator = function(accumulator)
+                
             case .Equal:
                 if (pendingOperation != nil) {
                     executePendingOperation()
