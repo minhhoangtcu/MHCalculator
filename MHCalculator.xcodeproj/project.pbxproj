@@ -14,6 +14,7 @@
 		B88FCE331D262E4D008963E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B88FCE311D262E4D008963E6 /* LaunchScreen.storyboard */; };
 		B88FCE3E1D262E4D008963E6 /* MHCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88FCE3D1D262E4D008963E6 /* MHCalculatorTests.swift */; };
 		B88FCE491D262E4D008963E6 /* MHCalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88FCE481D262E4D008963E6 /* MHCalculatorUITests.swift */; };
+		B8D6E5281D273636007191F9 /* Brain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D6E5271D273636007191F9 /* Brain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		B88FCE441D262E4D008963E6 /* MHCalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MHCalculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88FCE481D262E4D008963E6 /* MHCalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHCalculatorUITests.swift; sourceTree = "<group>"; };
 		B88FCE4A1D262E4D008963E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8D6E5271D273636007191F9 /* Brain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Brain.swift; path = ../Brain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		B88FCE271D262E4D008963E6 /* MHCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				B8D6E5271D273636007191F9 /* Brain.swift */,
 				B88FCE281D262E4D008963E6 /* AppDelegate.swift */,
 				B88FCE2A1D262E4D008963E6 /* ViewController.swift */,
 				B88FCE2C1D262E4D008963E6 /* Main.storyboard */,
@@ -193,6 +196,7 @@
 				TargetAttributes = {
 					B88FCE241D262E4D008963E6 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = B43REW4B7B;
 					};
 					B88FCE381D262E4D008963E6 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -257,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B88FCE2B1D262E4D008963E6 /* ViewController.swift in Sources */,
+				B8D6E5281D273636007191F9 /* Brain.swift in Sources */,
 				B88FCE291D262E4D008963E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,10 +406,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHCalculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.self.mhoang.MHCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -412,10 +420,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHCalculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.self.mhoang.MHCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -484,6 +495,7 @@
 				B88FCE4F1D262E4D008963E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B88FCE501D262E4D008963E6 /* Build configuration list for PBXNativeTarget "MHCalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +504,7 @@
 				B88FCE521D262E4D008963E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B88FCE531D262E4D008963E6 /* Build configuration list for PBXNativeTarget "MHCalculatorUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +513,7 @@
 				B88FCE551D262E4D008963E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
