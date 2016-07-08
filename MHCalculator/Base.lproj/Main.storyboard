@@ -358,8 +358,8 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <outlet property="description" destination="bja-1g-PiE" id="Phe-Bh-Phi"/>
-                        <outlet property="display" destination="aan-5U-FY9" id="7Zv-GU-2U2"/>
+                        <outlet property="descriptionLabel" destination="bja-1g-PiE" id="gaf-oU-STI"/>
+                        <outlet property="displayLabel" destination="aan-5U-FY9" id="CNm-2g-CVs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

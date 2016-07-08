@@ -72,7 +72,7 @@ class ViewController: UIViewController {
             brain.performOperation(symbol)
         }
         calculatorDisplay = brain.result
-        print(brain.description)
+        calculatorDescription = brain.description
     }
     
     @IBAction func clearPressed() {
