@@ -105,7 +105,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="operationPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RrF-hB-QJ4"/>
+                                                            <action selector="clearPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="geV-NL-0nt"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -307,7 +307,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="numberPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Akk-Lo-yO6"/>
+                                                            <action selector="dotPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="eTf-eC-AXv"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jy3-I5-heP">
@@ -358,6 +358,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="description" destination="bja-1g-PiE" id="Phe-Bh-Phi"/>
                         <outlet property="display" destination="aan-5U-FY9" id="7Zv-GU-2U2"/>
                     </connections>
                 </viewController>

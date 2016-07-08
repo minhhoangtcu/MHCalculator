@@ -10,14 +10,24 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet private weak var display: UILabel!
+    @IBOutlet private weak var displayLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
     
-    private var displayValue: Double {
+    private var calculatorDisplay: Double {
         get {
-            return Double(display.text!)!
+            return Double(displayLabel.text!)!
         }
         set {
-            display.text = String(newValue)
+            displayLabel.text = String(newValue)
+        }
+    }
+    
+    private var calculatorDescription: String? {
+        get {
+            return descriptionLabel.text
+        }
+        set {
+            descriptionLabel.text = newValue
         }
     }
 
@@ -33,20 +43,24 @@ class ViewController: UIViewController {
         
         let num = sender.currentTitle!
         
-        if num == "." {
-            if !isTypingFloat {
-                isTypingFloat = true
-                display.text = display.text! + num
-            }
-            // else we just need to ignore, because we cannot have two dots
-        } else if isTyping {
-            display.text = display.text! + num
+        if isTyping {
+            appendToDisplay(num)
         } else {
-            display.text = num
+            calculatorDisplay = Double(num)! // safe to unwrap, because only numbers call this function
             isTyping = true
         }
-        
-        
+    }
+    
+    @IBAction func dotPressed() {
+        if !isTypingFloat {
+            isTypingFloat = true
+            appendToDisplay(".")
+        }
+        // else we just need to ignore, because we cannot have two dots
+    }
+    
+    private func appendToDisplay(text: String) {
+        displayLabel.text = displayLabel.text! + text
     }
     
     private var brain = Brain()
@@ -54,16 +68,17 @@ class ViewController: UIViewController {
     @IBAction private func operationPressed(sender: AnyObject) {
         finishTyping()
         if let symbol = sender.currentTitle! {
-            if (symbol == "AC") {
-                displayValue = 0
-                brain.clear()
-            } else {
-                brain.setOperand(displayValue)
-                brain.performOperation(symbol)
-            }
+            brain.setOperand(calculatorDisplay)
+            brain.performOperation(symbol)
         }
-        displayValue = brain.result
+        calculatorDisplay = brain.result
         print(brain.description)
+    }
+    
+    @IBAction func clearPressed() {
+        calculatorDisplay = 0
+        brain.clear()
+        finishTyping()
     }
 }
 
