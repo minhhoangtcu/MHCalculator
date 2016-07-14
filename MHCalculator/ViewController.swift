@@ -46,6 +46,9 @@ class ViewController: UIViewController {
         if isTyping {
             appendToDisplay(num)
         } else {
+            if !brain.isPartialResult {
+                brain.clear()
+            }
             calculatorDisplay = Double(num)! // safe to unwrap, because only numbers call this function
             isTyping = true
         }

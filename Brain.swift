@@ -39,7 +39,7 @@ class Brain {
     }
     
     // return true if there are still pending operations, such as +, -, /, *
-    private var isPartialResult: Bool = false
+    var isPartialResult: Bool = false
     
     // the output of the calculator
     var result: Double {
@@ -74,9 +74,12 @@ class Brain {
         case Equal
     }
     
+    private var lastOperation: Operation = Operation.Constant(M_PI)
+    
     func performOperation(symbol: String) {
         
         if let operation = operations[symbol] {
+            
             switch operation {
             case .BinaryOperation(let function):
                 
@@ -95,7 +98,6 @@ class Brain {
                 
             case .Constant(let num):
                 accumulator = num
-                isPartialResult = false
                 
             case .UnaryOperation(let function):
                 
@@ -110,17 +112,29 @@ class Brain {
                 }
                 
                 accumulator = function(accumulator)
-                isPartialResult = false
                 
             case .Equal:
+                
                 if isPartialResult {
-                    sequence.append(String(accumulator)) // Only time when we need to put accumulator is after removing ...
-                    isPartialResult = false
+                    switch lastOperation { // I could not figure out how to compare the type of an object with an enum, so we have to do this switch thing
+                        
+                    case .UnaryOperation(_):
+                        print() // do nothing
+                        
+                    default:
+                        sequence.append(String(accumulator)) // We need to add accumulator if we have a pending operation and if it is not just after the unary operation, because the unary already append the result and other operation does not.
+                        isPartialResult = false
+                    }
                 }
+                
                 if pendingOperation != nil {
                     executePendingOperation()
                 }
+                
+                isPartialResult = false
             }
+            
+            lastOperation = operation
         }
     }
     
