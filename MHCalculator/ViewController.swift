@@ -77,6 +77,7 @@ class ViewController: UIViewController {
     
     @IBAction func clearPressed() {
         calculatorDisplay = 0
+        calculatorDescription = nil
         brain.clear()
         finishTyping()
     }
