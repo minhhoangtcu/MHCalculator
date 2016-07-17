@@ -11,6 +11,7 @@ import Foundation
 class Brain {
     
     private var accumulator: Double = 0
+    private var internalProgram = [AnyObject]()
     
     // keeps track of the sequence of operands and operations passed into the calculator
     private var sequence: [String] = []
@@ -51,6 +52,7 @@ class Brain {
     // the input of the calculator
     func setOperand(operand: Double) {
         accumulator = operand
+        internalProgram.append(operand)
     }
     
     private var operations: Dictionary<String,Operation> = [
@@ -87,12 +89,16 @@ class Brain {
                 if sequence.isEmpty {
                     sequence.append(String(accumulator)) // we only need to add left side operand if it is at the start of the sequence
                 }
-                sequence.append(symbol)
                 
-                // if before performing this operation, we have another binary operation, then we should perform it and get the result as the 1st operand
-                if (pendingOperation != nil) {
+                if pendingOperation != nil {
+                    // if before performing this operation, we have another binary operation, then we should perform it and get the result as the 1st operand
+                    if isLastOperationWasUnary() == false {
+                        sequence.append(String(accumulator)) // if last operation was unary then we have already have the operand in the descriptor
+                    }
                     executePendingOperation()
                 }
+                
+                sequence.append(symbol)
                 pendingOperation = PendingBinaryOperation(binaryOperation: function, firstOperand: accumulator)
                 isPartialResult = true
                 
@@ -115,16 +121,9 @@ class Brain {
                 
             case .Equal:
                 
-                if isPartialResult {
-                    switch lastOperation { // I could not figure out how to compare the type of an object with an enum, so we have to do this switch thing
-                        
-                    case .UnaryOperation(_):
-                        print() // do nothing
-                        
-                    default:
+                if isPartialResult && !isLastOperationWasUnary() {
                         sequence.append(String(accumulator)) // We need to add accumulator if we have a pending operation and if it is not just after the unary operation, because the unary already append the result and other operation does not.
                         isPartialResult = false
-                    }
                 }
                 
                 if pendingOperation != nil {
@@ -135,6 +134,15 @@ class Brain {
             }
             
             lastOperation = operation
+        }
+    }
+    
+    private func isLastOperationWasUnary() -> Bool {
+        switch lastOperation { // I could not figure out how to compare the type of an object with an enum, so we have to do this switch thing
+        case .UnaryOperation(_):
+            return true
+        default:
+            return false
         }
     }
     
@@ -165,6 +173,27 @@ class Brain {
         accumulator = 0
         pendingOperation = nil
         sequence.removeAll()
+        internalProgram.removeAll()
+    }
+    
+    typealias PropertyList = AnyObject
+    
+    var program: PropertyList {
+        get {
+            return internalProgram
+        }
+        set {
+            clear()
+            if let arrayOfOps = newValue as? [AnyObject] {
+                for op in arrayOfOps {
+                    if let operand = op as? Double {
+                        setOperand(operand)
+                    } else if let operation = op as? String {
+                        performOperation(operation)
+                    }
+                }
+            }
+        }
     }
     
 }

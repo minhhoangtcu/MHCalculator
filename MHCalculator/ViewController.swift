@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         if isTyping && isTypingFloat {
             appendToDisplay(num)
         } else if isTyping && !isTypingFloat {
-            calculatorDisplay = calculatorDisplay*10 + Double(num)!
+            calculatorDisplay = calculatorDisplay*10 + Double(num)!
         } else {
             startTypingNumber()
             calculatorDisplay = Double(num)! // safe to unwrap, because only numbers call this function
