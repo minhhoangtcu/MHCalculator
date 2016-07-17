@@ -43,14 +43,13 @@ class ViewController: UIViewController {
         
         let num = sender.currentTitle!
         
-        if isTyping {
+        if isTyping && isTypingFloat {
             appendToDisplay(num)
+        } else if isTyping && !isTypingFloat {
+            calculatorDisplay = calculatorDisplay*10 + Double(num)!
         } else {
-            if !brain.isPartialResult {
-                brain.clear()
-            }
+            startTypingNumber()
             calculatorDisplay = Double(num)! // safe to unwrap, because only numbers call this function
-            isTyping = true
         }
     }
     
@@ -58,8 +57,16 @@ class ViewController: UIViewController {
         if !isTypingFloat {
             isTypingFloat = true
             appendToDisplay(".")
+            startTypingNumber()
         }
         // else we just need to ignore, because we cannot have two dots
+    }
+    
+    private func startTypingNumber() {
+        if !brain.isPartialResult {
+            brain.clear()
+        }
+        isTyping = true
     }
     
     private func appendToDisplay(text: String) {
@@ -84,5 +91,21 @@ class ViewController: UIViewController {
         brain.clear()
         finishTyping()
     }
+    
+    var savedProgram: Brain.PropertyList?
+    
+    @IBAction func savePressed() {
+        savedProgram = brain.program
+    }
+    
+    @IBAction func restorePressed() {
+        if savedProgram != nil {
+            brain.program = savedProgram!
+            calculatorDisplay = brain.result
+            calculatorDescription = brain.description
+        }
+    }
+    
+    
 }
 

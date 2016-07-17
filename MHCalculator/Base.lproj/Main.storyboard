@@ -85,27 +85,27 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRD-tp-hxV">
                                                         <rect key="frame" x="300" y="0.0" width="150" height="70"/>
                                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" title="℃"/>
+                                                        <state key="normal" title="Save"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                                                 <integer key="value" value="1"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="operationPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U4v-ao-CNO"/>
+                                                            <action selector="savePressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="9KU-xe-fVt"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyl-wJ-N2D">
                                                         <rect key="frame" x="450" y="0.0" width="150" height="70"/>
                                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" title="℉"/>
+                                                        <state key="normal" title="Restore"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                                                 <integer key="value" value="1"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="operationPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="He5-Y7-fvT"/>
+                                                            <action selector="restorePressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="vmg-bQ-d65"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
