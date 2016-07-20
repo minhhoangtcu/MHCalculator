@@ -78,6 +78,7 @@ class Brain {
         "🍕" : Operation.Constant(M_PI),
         "cos" : Operation.UnaryOperation({ cos($0) }),
         "sin" : Operation.UnaryOperation({ sin($0) }),
+        "tan" : Operation.UnaryOperation({ tan($0) }),
         "=" : Operation.Equal,
         "+" : Operation.BinaryOperation( {$0 + $1}),
         "-" : Operation.BinaryOperation( {$0 - $1}),
