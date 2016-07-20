@@ -51,17 +51,27 @@ class Brain {
         }
     }
     
-    // the input of the calculator
+    // set the operand/accumulator of the calculator. This method is called after an user entered a number
     func setOperand(operand: Double) {
         accumulator = operand
+        isAccumulatorAVariable = false
         internalProgram.append(operand)
     }
     
     var variableValues: Dictionary<String, Double> = [:]
+    private var isAccumulatorAVariable = false
+    private var lastVariable: String?
     
-    //
+    // set the operand/accumulator of the calculator. This method is called after an user pressed any variable button
     func setOperand(operand: String) {
-        
+        if let value = variableValues[operand] {
+            accumulator = value
+        } else {
+            accumulator = 0.0
+        }
+        lastVariable = operand
+        isAccumulatorAVariable = true
+        internalProgram.append(operand)
     }
     
     private var operations: Dictionary<String,Operation> = [
@@ -98,13 +108,13 @@ class Brain {
                 
                 // Populate the sequence
                 if sequence.isEmpty {
-                    sequence.append(String(accumulator)) // we only need to add left side operand if it is at the start of the sequence
+                    addAccumulatorToSequence() // we only need to add left side operand if it is at the start of the sequence
                 }
                 
                 if pendingOperation != nil {
                     // if before performing this operation, we have another binary operation, then we should perform it and get the result as the 1st operand
                     if isLastOperationWasUnary() == false {
-                        sequence.append(String(accumulator)) // if last operation was unary then we have already have the operand in the descriptor
+                        addAccumulatorToSequence() // if last operation was unary then we have already have the operand in the descriptor
                     }
                     executePendingOperation()
                 }
@@ -123,7 +133,7 @@ class Brain {
                 } else {
                     // Populate the sequence
                     if (sequence.isEmpty) {
-                        sequence.append(String(accumulator)) // If there is already a sequence in the descriptor, then we just need to wrap it up. Else, we need to insert whatever in the accumulator in.
+                        addAccumulatorToSequence() // If there is already a sequence in the descriptor, then we just need to wrap it up. Else, we need to insert whatever in the accumulator in.
                     }
                     wrapSequence(symbol);
                 }
@@ -133,7 +143,7 @@ class Brain {
             case .Equal:
                 
                 if isPartialResult && !isLastOperationWasUnary() {
-                        sequence.append(String(accumulator)) // We need to add accumulator if we have a pending operation and if it is not just after the unary operation, because the unary already append the result and other operation does not.
+                        addAccumulatorToSequence() // We need to add accumulator if we have a pending operation and if it is not just after the unary operation, because the unary already append the result and other operation does not.
                         isPartialResult = false
                 }
                 
@@ -165,6 +175,22 @@ class Brain {
         sequence.insert("(", atIndex: 0)
         sequence.insert(symbol, atIndex: 0)
         sequence.append(")")
+    }
+    
+    private func addAccumulatorToSequence() {
+        if isAccumulatorAVariable && lastVariable != nil {
+            sequence.append(lastVariable!)
+        } else {
+            sequence.append(String(accumulator))
+        }
+    }
+    
+    private func addAccumulatedWrappedWith(symbol: String) {
+        if isAccumulatorAVariable && lastVariable != nil {
+            sequence.append(getWrapedString(symbol, text: lastVariable!))
+        } else {
+            sequence.append(getWrapedString(symbol, text: String(accumulator)))
+        }
     }
     
     private func executePendingOperation() {

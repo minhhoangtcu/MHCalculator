@@ -76,11 +76,14 @@ class ViewController: UIViewController {
     private var brain = Brain()
 
     @IBAction private func operationPressed(sender: AnyObject) {
-        finishTyping()
+        
         if let symbol = sender.currentTitle! {
-            brain.setOperand(calculatorDisplay)
+            if isTypingFloat || isTyping { // set the operand according to the display (what user typed in) only when the user actually typed in something. Else, the user is using a variable.
+                brain.setOperand(calculatorDisplay)
+            }
             brain.performOperation(symbol)
         }
+        finishTyping()
         calculatorDisplay = brain.result
         calculatorDescription = brain.description
     }
@@ -107,7 +110,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func memorizedVariablePressed(sender: AnyObject) {
-        
+        if let variable = sender.currentTitle! {
+            brain.setOperand(variable)
+        }
     }
     
     @IBAction func saveVariablePressed(sender: AnyObject) {
