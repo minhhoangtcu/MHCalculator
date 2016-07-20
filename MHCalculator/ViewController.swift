@@ -106,6 +106,14 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func memorizedVariablePressed(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func saveVariablePressed(sender: AnyObject) {
+        
+    }
+    
     
 }
 

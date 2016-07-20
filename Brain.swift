@@ -11,9 +11,11 @@ import Foundation
 class Brain {
     
     private var accumulator: Double = 0
+    
+    // keep track of operands and operations
     private var internalProgram = [AnyObject]()
     
-    // keeps track of the sequence of operands and operations passed into the calculator
+    // a sequence of operands, operations, parenthesis, etc. to help visualize the calculator
     private var sequence: [String] = []
     
     // generate description based on sequence of operands/operations
@@ -55,6 +57,13 @@ class Brain {
         internalProgram.append(operand)
     }
     
+    var variableValues: Dictionary<String, Double> = [:]
+    
+    //
+    func setOperand(operand: String) {
+        
+    }
+    
     private var operations: Dictionary<String,Operation> = [
         "🍕" : Operation.Constant(M_PI),
         "cos" : Operation.UnaryOperation({ cos($0) }),
@@ -66,7 +75,9 @@ class Brain {
         "/" : Operation.BinaryOperation( {$0 / $1}),
         "℃" : Operation.UnaryOperation( {($0 - 32) * 5 / 9}),
         "℉" : Operation.UnaryOperation( {$0 * 9/5 + 32}),
-        "√" : Operation.UnaryOperation( {sqrt($0)})
+        "√" : Operation.UnaryOperation( {sqrt($0)}),
+        "XOR" : Operation.BinaryOperation( {Double(Int($0) ^ Int($1))} ),
+        "Inverse" : Operation.UnaryOperation( { -$0 } )
     ]
     
     private enum Operation {
