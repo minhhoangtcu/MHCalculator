@@ -58,7 +58,7 @@ class Brain {
         internalProgram.append(operand)
     }
     
-    var variableValues: Dictionary<String, Double> = [:]
+    private var variableValues: Dictionary<String, Double> = [:]
     private var isAccumulatorAVariable = false
     private var lastVariable: String?
     
@@ -72,6 +72,10 @@ class Brain {
         lastVariable = operand
         isAccumulatorAVariable = true
         internalProgram.append(operand)
+    }
+    
+    func addVariable(variable: String, value: Double) {
+        variableValues[variable] = value
     }
     
     private var operations: Dictionary<String,Operation> = [
@@ -155,6 +159,7 @@ class Brain {
                 isPartialResult = false
             }
             
+            internalProgram.append(symbol)
             lastOperation = operation
         }
     }
@@ -208,6 +213,7 @@ class Brain {
     }
     
     func clear() {
+        print(">>> Brain: cleared all")
         accumulator = 0
         pendingOperation = nil
         sequence.removeAll()
@@ -223,13 +229,26 @@ class Brain {
         set {
             clear()
             if let arrayOfOps = newValue as? [AnyObject] {
-                for op in arrayOfOps {
-                    if let operand = op as? Double {
-                        setOperand(operand)
-                    } else if let operation = op as? String {
-                        performOperation(operation)
-                    }
+                runProgram(arrayOfOps)
+            }
+        }
+    }
+    
+    func recalculate() {
+        runProgram(internalProgram)
+    }
+    
+    private func runProgram(arrayOfOps: [AnyObject]) {
+        for op in arrayOfOps {
+            if let operand = op as? Double {
+                setOperand(operand)
+            } else if let text = op as? String {
+                if operations[text] != nil {
+                    performOperation(text)
+                } else {
+                    setOperand(text) // has to be a variable
                 }
+                
             }
         }
     }

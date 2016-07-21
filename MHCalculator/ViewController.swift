@@ -39,6 +39,8 @@ class ViewController: UIViewController {
         isTypingFloat = false
     }
     
+    private var lastProgram: Brain.PropertyList?
+    
     @IBAction private func numberPressed(sender: UIButton) {
         
         let num = sender.currentTitle!
@@ -48,6 +50,7 @@ class ViewController: UIViewController {
         } else if isTyping && !isTypingFloat {
             calculatorDisplay = calculatorDisplay*10 + Double(num)!
         } else {
+            lastProgram = brain.program
             startTypingNumber()
             calculatorDisplay = Double(num)! // safe to unwrap, because only numbers call this function
         }
@@ -95,7 +98,7 @@ class ViewController: UIViewController {
         finishTyping()
     }
     
-    var savedProgram: Brain.PropertyList?
+    private var savedProgram: Brain.PropertyList?
     
     @IBAction func savePressed() {
         savedProgram = brain.program
@@ -111,12 +114,25 @@ class ViewController: UIViewController {
     
     @IBAction func memorizedVariablePressed(sender: AnyObject) {
         if let variable = sender.currentTitle! {
+            if !brain.isPartialResult {
+                brain.clear()
+            }
             brain.setOperand(variable)
         }
     }
     
     @IBAction func saveVariablePressed(sender: AnyObject) {
-        
+        if let variable = sender.currentTitle!!.characters.last { // have no idea why I need two "!!"
+            brain.addVariable(String(variable), value: calculatorDisplay)
+            if lastProgram != nil {
+                brain.program = lastProgram!
+            } else {
+                brain.recalculate()
+            }
+            finishTyping() // before we were typing number for the calculator
+            calculatorDisplay = brain.result
+            calculatorDescription = brain.description
+        }
     }
     
     
