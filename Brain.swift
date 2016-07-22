@@ -134,7 +134,7 @@ class Brain {
             case .UnaryOperation(let function):
                 
                 if (isPartialResult) {
-                    sequence.append(getWrapedString(symbol, text: String(accumulator)))
+                    addAccumulatedWrappedWith(symbol)
                 } else {
                     // Populate the sequence
                     if (sequence.isEmpty) {
@@ -174,7 +174,7 @@ class Brain {
     }
     
     private func getWrapedString(symbol: String, text: String) -> String {
-        return "\(symbol)(\(accumulator))"
+        return "\(symbol)(\(text))"
     }
     
     private func wrapSequence(symbol: String) {
@@ -235,29 +235,52 @@ class Brain {
     }
     
     func recalculate() {
+        sequence.removeAll()
         runProgram(internalProgram)
     }
     
     func undo() {
-        internalProgram.removeLast()
-        recalculate()
-    }
-    
-    private func runProgram(arrayOfOps: [AnyObject]) {
-        for op in arrayOfOps {
-            if let operand = op as? Double {
-                setOperand(operand)
-            } else if let text = op as? String {
-                if operations[text] != nil {
-                    performOperation(text)
-                } else {
-                    setOperand(text) // has to be a variable
-                }
-                
+        if internalProgram.count != 0 {
+            var lastProgram = internalProgram
+            
+            // remove all operands before an operation and remove the last operation
+            while !isOperation(lastProgram.last!) { // more than 1 -> can unwrap
+                lastProgram.removeLast()
             }
+            lastProgram.removeLast()
+            
+            clear()
+            runProgram(lastProgram)
         }
     }
     
+    private func runProgram(arrayOfOps: PropertyList) {
+        for op in arrayOfOps as! [AnyObject] {
+            if isDouble(op) {
+                setOperand(op as! Double)
+            } else if isOperation(op) {
+                performOperation(op as! String)
+            } else {
+                setOperand(op as! String) // has to be a variable
+            }
+        }
+    }
+
+    private func isDouble(text: AnyObject) -> Bool {
+        if let _ = text as? Double {
+            return true
+        }
+        return false
+    }
+
+    private func isOperation(text: AnyObject) -> Bool {
+        if let s = text as? String {
+            if operations[s] != nil {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 

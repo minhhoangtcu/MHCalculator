@@ -13,10 +13,14 @@ class ViewController: UIViewController {
     @IBOutlet private weak var displayLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
-    
+    private let MAX_CHARS_IN_DISPLAY = 8
+    private var isWithinCharsLimit: Bool {
+        get {
+            return displayLabel.text!.characters.count <= MAX_CHARS_IN_DISPLAY
+        }
+    }
     
     private var calculatorDisplay: Double {
-        
         get {
             let format = NSNumberFormatter()
             format.numberStyle = .DecimalStyle
@@ -55,9 +59,13 @@ class ViewController: UIViewController {
         let num = sender.currentTitle!
         
         if isTyping && isTypingFloat {
-            appendToDisplay(num)
+            if isWithinCharsLimit {
+                appendToDisplay(num)
+            }
         } else if isTyping && !isTypingFloat {
-            calculatorDisplay = calculatorDisplay*10 + Double(num)!
+            if isWithinCharsLimit {
+                calculatorDisplay = calculatorDisplay*10 + Double(num)!
+            }
         } else {
             lastProgram = brain.program
             startTypingNumber()
@@ -66,7 +74,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dotPressed() {
-        if !isTypingFloat {
+        if !isTypingFloat && isWithinCharsLimit {
             isTypingFloat = true
             appendToDisplay(".")
             startTypingNumber()
@@ -93,6 +101,7 @@ class ViewController: UIViewController {
             if isTypingFloat || isTyping { // set the operand according to the display (what user typed in) only when the user actually typed in something. Else, the user is using a variable.
                 brain.setOperand(calculatorDisplay)
             }
+            lastProgram = brain.program
             brain.performOperation(symbol)
         }
         finishTyping()
@@ -134,7 +143,7 @@ class ViewController: UIViewController {
         if let variable = sender.currentTitle!!.characters.last { // have no idea why I need two "!!"
             brain.addVariable(String(variable), value: calculatorDisplay)
             if lastProgram != nil {
-                brain.program = lastProgram!
+                brain.program = lastProgram! // reload last program to show result
             } else {
                 brain.recalculate()
             }
@@ -160,6 +169,7 @@ class ViewController: UIViewController {
     private func removeLastFromDisplay() {
         if displayLabel.text?.characters.count == 1 {
             calculatorDisplay = 0
+            finishTyping()
         } else if calculatorDisplay != 0 {
             displayLabel.text!.removeAtIndex(displayLabel.text!.endIndex.predecessor())
         }
