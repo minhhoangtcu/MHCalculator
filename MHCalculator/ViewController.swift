@@ -18,7 +18,11 @@ class ViewController: UIViewController {
             return Double(displayLabel.text!)!
         }
         set {
-            displayLabel.text = String(newValue)
+            if floor(newValue) == newValue {
+                displayLabel.text = String(Int(newValue))
+            } else {
+                displayLabel.text = String(newValue)
+            }
         }
     }
     
@@ -75,7 +79,7 @@ class ViewController: UIViewController {
     private func appendToDisplay(text: String) {
         displayLabel.text = displayLabel.text! + text
     }
-    
+
     private var brain = Brain()
 
     @IBAction private func operationPressed(sender: AnyObject) {
@@ -135,6 +139,26 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func undoPressed() {
+        if isTyping || isTypingFloat {
+            if displayLabel.text?.characters.last == "." {
+                isTypingFloat = false
+            }
+            removeLastFromDisplay()
+        } else {
+            brain.undo()
+            calculatorDisplay = brain.result
+            calculatorDescription = brain.description
+        }
+    }
+    
+    private func removeLastFromDisplay() {
+        if displayLabel.text?.characters.count == 1 {
+            calculatorDisplay = 0
+        } else if calculatorDisplay != 0 {
+            displayLabel.text!.removeAtIndex(displayLabel.text!.endIndex.predecessor())
+        }
+    }
     
 }
 

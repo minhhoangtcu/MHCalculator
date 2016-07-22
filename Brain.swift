@@ -238,6 +238,11 @@ class Brain {
         runProgram(internalProgram)
     }
     
+    func undo() {
+        internalProgram.removeLast()
+        recalculate()
+    }
+    
     private func runProgram(arrayOfOps: [AnyObject]) {
         for op in arrayOfOps {
             if let operand = op as? Double {
