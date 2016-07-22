@@ -25,14 +25,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZOl-Tf-ew2">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aan-5U-FY9">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="characterWrap" minimumFontSize="58" translatesAutoresizingMaskIntoConstraints="NO" id="aan-5U-FY9">
                                                 <rect key="frame" x="0.0" y="30" width="569.5" height="77"/>
                                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="65"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bja-1g-PiE">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bja-1g-PiE">
                                                 <rect key="frame" x="0.0" y="137" width="570" height="24"/>
                                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
@@ -43,8 +43,11 @@
                                         <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="aan-5U-FY9" firstAttribute="bottom" secondItem="bja-1g-PiE" secondAttribute="top" constant="-30" id="9QA-7L-FYq"/>
+                                            <constraint firstAttribute="trailing" secondItem="aan-5U-FY9" secondAttribute="trailing" constant="30.5" id="9ZM-qA-mN5"/>
                                             <constraint firstAttribute="trailing" secondItem="aan-5U-FY9" secondAttribute="trailing" constant="30" id="GgN-d5-ISl"/>
                                             <constraint firstItem="aan-5U-FY9" firstAttribute="top" secondItem="ZOl-Tf-ew2" secondAttribute="top" constant="30" id="LdA-PS-4xW"/>
+                                            <constraint firstItem="bja-1g-PiE" firstAttribute="top" secondItem="aan-5U-FY9" secondAttribute="bottom" constant="30" id="U03-oV-ZJW"/>
+                                            <constraint firstItem="aan-5U-FY9" firstAttribute="top" secondItem="ZOl-Tf-ew2" secondAttribute="top" constant="30" id="WzJ-gZ-sdf"/>
                                             <constraint firstItem="aan-5U-FY9" firstAttribute="leading" secondItem="ZOl-Tf-ew2" secondAttribute="leading" id="Xl2-go-Gam"/>
                                             <constraint firstItem="bja-1g-PiE" firstAttribute="leading" secondItem="ZOl-Tf-ew2" secondAttribute="leading" id="d5r-WB-ncq"/>
                                             <constraint firstAttribute="trailing" secondItem="bja-1g-PiE" secondAttribute="trailing" constant="30" id="xXF-k7-1Id"/>

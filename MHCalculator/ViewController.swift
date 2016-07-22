@@ -13,16 +13,21 @@ class ViewController: UIViewController {
     @IBOutlet private weak var displayLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
+    
+    
     private var calculatorDisplay: Double {
+        
         get {
-            return Double(displayLabel.text!)!
+            let format = NSNumberFormatter()
+            format.numberStyle = .DecimalStyle
+            format.maximumFractionDigits = 6
+            return format.numberFromString(displayLabel.text!)!.doubleValue
         }
         set {
-            if floor(newValue) == newValue {
-                displayLabel.text = String(Int(newValue))
-            } else {
-                displayLabel.text = String(newValue)
-            }
+            let format = NSNumberFormatter()
+            format.numberStyle = .DecimalStyle
+            format.maximumFractionDigits = 6
+            displayLabel.text = format.stringFromNumber(newValue)
         }
     }
     
