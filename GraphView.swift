@@ -11,15 +11,24 @@ import UIKit
 @IBDesignable
 class GraphView: UIView {
     
+    let axesDrawer = AxesDrawer()
+    
     @IBInspectable
-    var scale: CGFloat = 1.0
+    var scale: CGFloat = 50.0
+    
+    @IBInspectable
+    var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } }
+    
+    func changeScale(multiplier: CGFloat) {
+        pointsPerUnit *= multiplier
+    }
     
     private var axisCenter: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
     override func drawRect(rect: CGRect) {
-        print("yo")
+        axesDrawer.drawAxesInRect(rect, origin: axisCenter, pointsPerUnit: pointsPerUnit)
     }
 
 }

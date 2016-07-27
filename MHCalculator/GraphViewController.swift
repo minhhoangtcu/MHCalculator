@@ -10,4 +10,28 @@ import UIKit
 
 class GraphViewController: UIViewController {
     
+    @IBOutlet weak var graphView: GraphView! {
+        didSet {
+            updateUI()
+        }
+    }
+
+    @IBAction func zoom(regconizer: UIPinchGestureRecognizer) {
+        switch regconizer.state {
+        case .Changed, .Ended:
+            graphView.changeScale(regconizer.scale)
+            regconizer.scale = 1.0
+        default:
+            break
+        }
+    }
+    
+    private func updateUI() {
+        if graphView != nil {
+            
+            
+            
+        }
+    }
+    
 }
