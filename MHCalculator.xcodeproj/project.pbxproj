@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B84BCED21D49111700B8D0B0 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84BCED11D49111700B8D0B0 /* GraphView.swift */; };
 		B87598A51D47F01E0016FAD6 /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87598A41D47F01E0016FAD6 /* AxesDrawer.swift */; };
 		B87598A81D47F6090016FAD6 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87598A71D47F6090016FAD6 /* GraphViewController.swift */; };
 		B88FCE291D262E4D008963E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88FCE281D262E4D008963E6 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B84BCED11D49111700B8D0B0 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphView.swift; path = ../GraphView.swift; sourceTree = "<group>"; };
 		B87598A41D47F01E0016FAD6 /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
 		B87598A71D47F6090016FAD6 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		B88FCE251D262E4D008963E6 /* MHCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MHCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +122,7 @@
 				B88FCE2A1D262E4D008963E6 /* CalculatorViewController.swift */,
 				B88FCE2C1D262E4D008963E6 /* Main.storyboard */,
 				B87598A71D47F6090016FAD6 /* GraphViewController.swift */,
+				B84BCED11D49111700B8D0B0 /* GraphView.swift */,
 			);
 			path = MHCalculator;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				B87598A51D47F01E0016FAD6 /* AxesDrawer.swift in Sources */,
 				B8D6E5281D273636007191F9 /* Brain.swift in Sources */,
 				B88FCE291D262E4D008963E6 /* AppDelegate.swift in Sources */,
+				B84BCED21D49111700B8D0B0 /* GraphView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

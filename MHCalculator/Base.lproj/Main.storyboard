@@ -18,12 +18,24 @@
                     <view key="view" contentMode="scaleToFill" id="5vq-vg-ELI" customClass="MKMapView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsx-pG-fiH" customClass="GraphView" customModule="MHCalculator" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fsx-pG-fiH" secondAttribute="trailing" id="9wa-gF-5Mr"/>
+                            <constraint firstItem="fsx-pG-fiH" firstAttribute="top" secondItem="5vq-vg-ELI" secondAttribute="top" id="Om4-TS-uuj"/>
+                            <constraint firstItem="fsx-pG-fiH" firstAttribute="bottom" secondItem="FgX-Ed-Qq2" secondAttribute="top" id="dz8-iS-SrO"/>
+                            <constraint firstItem="fsx-pG-fiH" firstAttribute="leading" secondItem="5vq-vg-ELI" secondAttribute="leading" id="ouo-F2-VF9"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Uo-ig-dNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="477" y="765"/>
+            <point key="canvasLocation" x="385" y="789"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="es5-2H-zBt">
