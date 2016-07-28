@@ -26,6 +26,15 @@ class GraphViewController: UIViewController {
         }
     }
     
+    @IBAction func moveCenter(regconizer: UITapGestureRecognizer) {
+        switch regconizer.state {
+        case .Ended:
+            graphView.changeCenter(regconizer.locationInView(graphView))
+        default:
+            break
+        }
+    }
+    
     private func updateUI() {
         if graphView != nil {
             

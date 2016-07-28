@@ -11,23 +11,35 @@ import UIKit
 @IBDesignable
 class GraphView: UIView {
     
-    let axesDrawer = AxesDrawer()
+    private let axesDrawer = AxesDrawer()
     
     @IBInspectable
     var scale: CGFloat = 50.0
     
     @IBInspectable
-    var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } }
+    private var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } }
     
+    @IBInspectable
+    private var axisCenter: CGPoint!  { didSet { setNeedsDisplay() } } // implicit unwrapped point. We will hand it a value as soon as possible
+    
+    private var centerPoint: CGPoint {
+        return CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+    
+    // for zooming in and out
     func changeScale(multiplier: CGFloat) {
         pointsPerUnit *= multiplier
     }
     
-    private var axisCenter: CGPoint {
-        return CGPoint(x: bounds.midX, y: bounds.midY)
+    // more center of the axis
+    func changeCenter(point: CGPoint) {
+        axisCenter = point
     }
     
     override func drawRect(rect: CGRect) {
+        if axisCenter == nil {
+            axisCenter = centerPoint
+        }
         axesDrawer.drawAxesInRect(rect, origin: axisCenter, pointsPerUnit: pointsPerUnit)
     }
 
