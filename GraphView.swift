@@ -36,6 +36,16 @@ class GraphView: UIView {
         axisCenter = point
     }
     
+    func moveCenterX(x: CGFloat) {
+        axisCenter.x += x
+    }
+    
+    func moveCenterY(y: CGFloat) {
+        axisCenter.y += y
+    }
+    
+    // pan the view around. Changing the axis of the graph accordingly
+    
     override func drawRect(rect: CGRect) {
         if axisCenter == nil {
             axisCenter = centerPoint

@@ -35,6 +35,19 @@ class GraphViewController: UIViewController {
         }
     }
     
+    @IBAction func pan(regconizer: UIPanGestureRecognizer) {
+        switch regconizer.state {
+        case .Changed, .Ended:
+            let trans = regconizer.translationInView(graphView)
+            graphView.moveCenterX(trans.x)
+            graphView.moveCenterY(trans.y)
+            regconizer.setTranslation(CGPointZero, inView: graphView)
+        default:
+            break
+        }
+    }
+    
+    
     private func updateUI() {
         if graphView != nil {
             
