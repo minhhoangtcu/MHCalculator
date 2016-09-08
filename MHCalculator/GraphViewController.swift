@@ -10,7 +10,7 @@ import UIKit
 
 class GraphViewController: UIViewController, GraphViewDataSource {
     
-    var brain: Brain!
+    var program: Brain.PropertyList?
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
@@ -22,14 +22,20 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         var points = [CGPoint]()
         
         // at the start of the program, CVC has not segue/transfer brain into GVC
-        if brain == nil {
+        if program == nil {
             return points
         }
         
-        print("xMin: \(sender.xMin) \txMax: \(sender.xMax)")
+        let brain = Brain()
+        
+        //print("xMin: \(sender.xMin) \txMax: \(sender.xMax)")
         
         var runner = sender.xMin
         while runner <= sender.xMax {
+            // We have to reload the brain for each iteration because it will fill itself with data
+            brain.clear()
+            brain.loadProgram(program!)
+            
             if let y = brain.y(Double(runner)) {
                 points.append(
                     CGPoint (
@@ -37,7 +43,7 @@ class GraphViewController: UIViewController, GraphViewDataSource {
                         y: graphView.axisCenter.y - CGFloat(y) * graphView.pointsPerUnit
                     )
                 )
-                print("x: \(runner) \ty: \(y)")
+                //print("x: \(runner) \ty: \(y)")
             }
             runner += sender.increment
         }

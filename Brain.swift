@@ -213,14 +213,14 @@ class Brain {
     }
     
     func clear() {
-        print("Brain: cleared all")
+        //print("Brain: cleared all")
         accumulator = 0
         pendingOperation = nil
         sequence.removeAll()
         internalProgram.removeAll()
     }
     
-    typealias PropertyList = AnyObject
+    typealias PropertyList = [AnyObject]
     
     var program: PropertyList {
         get {
@@ -228,15 +228,17 @@ class Brain {
         }
         set {
             clear()
-            if let arrayOfOps = newValue as? [AnyObject] {
-                runProgram(arrayOfOps)
-            }
+            runProgram(newValue)
         }
     }
     
     func recalculate() {
         sequence.removeAll()
         runProgram(internalProgram)
+    }
+    
+    func loadProgram(program: PropertyList) {
+        internalProgram = program
     }
     
     func undo() {
@@ -255,7 +257,7 @@ class Brain {
     }
     
     private func runProgram(arrayOfOps: PropertyList) {
-        for op in arrayOfOps as! [AnyObject] {
+        for op in arrayOfOps {
             if isDouble(op) {
                 setOperand(op as! Double)
             } else if isOperation(op) {
@@ -283,11 +285,11 @@ class Brain {
     }
     
     // Generate the output of the function y for the given internal program.
-    public func y(x: Double) -> Double? {
+    func y(x: Double) -> Double? {
         if internalProgram.count == 0 {
             return nil
         }
-        addVariable("M", value: x)
+        variableValues["M"] = x
         recalculate()
         return accumulator
     }

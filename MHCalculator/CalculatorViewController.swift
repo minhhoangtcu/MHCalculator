@@ -25,7 +25,7 @@ class CalculatorViewController: UIViewController {
             case "Show Graph":
                 if let vc = destination as? GraphViewController {
                     print("CVC: Segue into GVC")
-                    vc.brain = brain
+                    vc.program = brain.program
                 }
             default:
                 break
