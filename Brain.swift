@@ -213,7 +213,7 @@ class Brain {
     }
     
     func clear() {
-        print(">>> Brain: cleared all")
+        print("Brain: cleared all")
         accumulator = 0
         pendingOperation = nil
         sequence.removeAll()
@@ -280,6 +280,13 @@ class Brain {
             }
         }
         return false
+    }
+    
+    // Generate the output of the function y for the given internal program.
+    public func y(x: Double) -> Double {
+        addVariable("M", value: x)
+        recalculate()
+        return accumulator
     }
 }
 
