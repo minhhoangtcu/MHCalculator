@@ -8,16 +8,51 @@
 
 import UIKit
 
-class GraphViewController: UIViewController {
+class GraphViewController: UIViewController, GraphViewDataSource {
     
     var brain: Brain!
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
-            updateUI()
+            graphView.dataSource = self
         }
     }
-
+    
+    func points(sender: GraphView) -> [CGPoint] {
+        var points = [CGPoint]()
+        
+        // at the start of the program, CVC has not segue/transfer brain into GVC
+        if brain == nil {
+            return points
+        }
+        
+        print("xMin: \(sender.xMin) \txMax: \(sender.xMax)")
+        
+        var runner = sender.xMin
+        while runner <= sender.xMax {
+            if let y = brain.y(Double(runner)) {
+                points.append(
+                    CGPoint (
+                        x: runner*graphView.pointsPerUnit + graphView.axisCenter.x,
+                        y: graphView.axisCenter.y - CGFloat(y) * graphView.pointsPerUnit
+                    )
+                )
+                print("x: \(runner) \ty: \(y)")
+            }
+            runner += sender.increment
+        }
+        
+        return points
+    }
+    
+    private func updateUI() {
+        if graphView != nil {
+            
+        }
+    }
+    
+    // Mark: Gestures
+    
     @IBAction func zoom(regconizer: UIPinchGestureRecognizer) {
         switch regconizer.state {
         case .Changed, .Ended:
@@ -48,14 +83,4 @@ class GraphViewController: UIViewController {
             break
         }
     }
-    
-    
-    private func updateUI() {
-        if graphView != nil {
-            
-            
-            
-        }
-    }
-    
 }

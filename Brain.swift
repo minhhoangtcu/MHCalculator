@@ -283,7 +283,10 @@ class Brain {
     }
     
     // Generate the output of the function y for the given internal program.
-    public func y(x: Double) -> Double {
+    public func y(x: Double) -> Double? {
+        if internalProgram.count == 0 {
+            return nil
+        }
         addVariable("M", value: x)
         recalculate()
         return accumulator

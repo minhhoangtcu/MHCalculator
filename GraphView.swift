@@ -8,35 +8,74 @@
 
 import UIKit
 
+// Declare the dataSource of the graphView, so that it can be used be other program.
+protocol GraphViewDataSource: class {
+    func points(sender: GraphView) -> [CGPoint]
+}
+
 @IBDesignable
 class GraphView: UIView {
     
-    private let axesDrawer = AxesDrawer()
-    
-    // determine how many points per a unit. For example, if you want 50 points between 0 and 2, you would set pointsperUnit to 25. So, the bigger pointsperUnit, the smaller the graph is.
-    @IBInspectable
-    private var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } }
+    // Mark: Properties of the graph. They can change how the graph is going to look like (color, scale, width).
     
     @IBInspectable
-    private var axisCenter: CGPoint!  { didSet { setNeedsDisplay() } } // implicit unwrapped point. We will hand it a value as soon as possible
+    var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } } // determine how many points per a unit. For example, if you want 50 points between 0 and 2, you would set pointsperUnit to 25. So, the bigger pointsperUnit, the smaller the graph is.
+    
+    @IBInspectable
+    var axisCenter: CGPoint!  { didSet { setNeedsDisplay() } } // implicit unwrapped point. We will hand it a value as soon as possible
+    
+    @IBInspectable
+    private var lineWidth: CGFloat = 3 { didSet { setNeedsDisplay() } }
+    
+    @IBInspectable
+    var pathColor: UIColor = UIColor.blackColor() { didSet { setNeedsDisplay() } }
     
     private var centerPoint: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
-    func drawFunction(function: (Double) -> Double) {
+    // Mark: Variables for GVC to generate all points for the view to graph
+    
+    var xMin: CGFloat { get { return -axisCenter.x / pointsPerUnit } }
+    var xMax: CGFloat { get { return xMin + bounds.size.width / pointsPerUnit } }
+    var increment: CGFloat { get { return 1.0 / pointsPerUnit } }
+    
+    // Mark: Graph drawing functions
+    
+    private let axesDrawer = AxesDrawer()
+    weak var dataSource: GraphViewDataSource?
+    
+    override func drawRect(rect: CGRect) {
+        // Give initial value for the center
+        if axisCenter == nil {
+            axisCenter = centerPoint
+        }
+        
+        axesDrawer.drawAxesInRect(rect, origin: axisCenter, pointsPerUnit: pointsPerUnit)
+        drawGraph()
+    }
+    
+    func drawGraph() {
+
+        // set up the path
         let path = UIBezierPath()
-        path.moveToPoint(CGPoint(x: bounds.minX, y: axesDrawer.align(axisCenter.y)))
+        path.lineWidth = lineWidth
+        pathColor.set()
         
-        let widthInPixel = bounds.width
-        
-        for i in Int(bounds.minX)...Int(widthInPixel) {
-            path.addLineToPoint(CGPoint(x: CGFloat(i), y: axesDrawer.align(CGFloat(function(Double(i))))))
+        // draw the graph
+        if var points = dataSource?.points(self) where points.count > 1 {
+            let firstPoint = points.removeFirst()
+            path.moveToPoint(firstPoint)
+            for point in points {
+                path.addLineToPoint(point)
+            }
         }
         
         path.stroke()
         setNeedsDisplay()
     }
+    
+    // MARK: Gestures
     
     // for zooming in and out
     func changeScale(multiplier: CGFloat) {
@@ -57,12 +96,4 @@ class GraphView: UIView {
     func moveCenterY(y: CGFloat) {
         axisCenter.y += y
     }
-    
-    override func drawRect(rect: CGRect) {
-        if axisCenter == nil {
-            axisCenter = centerPoint
-        }
-        axesDrawer.drawAxesInRect(rect, origin: axisCenter, pointsPerUnit: pointsPerUnit)
-    }
-
 }
