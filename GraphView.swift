@@ -13,9 +13,7 @@ class GraphView: UIView {
     
     private let axesDrawer = AxesDrawer()
     
-    @IBInspectable
-    var scale: CGFloat = 50.0
-    
+    // determine how many points per a unit. For example, if you want 50 points between 0 and 2, you would set pointsperUnit to 25. So, the bigger pointsperUnit, the smaller the graph is.
     @IBInspectable
     private var pointsPerUnit: CGFloat = 25.0 { didSet { setNeedsDisplay() } }
     
@@ -26,25 +24,39 @@ class GraphView: UIView {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
+    func drawFunction(function: (Double) -> Double) {
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: bounds.minX, y: axesDrawer.align(axisCenter.y)))
+        
+        let widthInPixel = bounds.width
+        
+        for i in Int(bounds.minX)...Int(widthInPixel) {
+            path.addLineToPoint(CGPoint(x: CGFloat(i), y: axesDrawer.align(CGFloat(function(Double(i))))))
+        }
+        
+        path.stroke()
+        setNeedsDisplay()
+    }
+    
     // for zooming in and out
     func changeScale(multiplier: CGFloat) {
         pointsPerUnit *= multiplier
     }
     
-    // more center of the axis
+    // move center of the axis
     func changeCenter(point: CGPoint) {
         axisCenter = point
     }
     
+    // move center horizontally by specified points
     func moveCenterX(x: CGFloat) {
         axisCenter.x += x
     }
     
+    // move center vertically by specified points
     func moveCenterY(y: CGFloat) {
         axisCenter.y += y
     }
-    
-    // pan the view around. Changing the axis of the graph accordingly
     
     override func drawRect(rect: CGRect) {
         if axisCenter == nil {

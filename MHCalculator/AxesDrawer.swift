@@ -179,7 +179,7 @@ class AxesDrawer
         return point
     }
 
-    private func align(coordinate: CGFloat) -> CGFloat {
+    func align(coordinate: CGFloat) -> CGFloat {
         return round(coordinate * contentScaleFactor) / contentScaleFactor
     }
 }

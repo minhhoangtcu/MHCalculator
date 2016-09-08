@@ -10,6 +10,8 @@ import UIKit
 
 class GraphViewController: UIViewController {
     
+    var brain: Brain!
+    
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             updateUI()
