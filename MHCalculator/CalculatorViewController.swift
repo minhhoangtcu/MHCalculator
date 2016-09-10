@@ -9,15 +9,15 @@
 import UIKit
 
 class CalculatorViewController: UIViewController {
-
+    
     @IBOutlet private weak var displayLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // if the segue's destination is a nav view, we bypass it and get its content view
-        var destination = segue.destinationViewController as? UIViewController
+        var destination = segue.destinationViewController
         if let navCon = destination as? UINavigationController {
-            destination = navCon.visibleViewController
+            destination = navCon.visibleViewController!
         }
         
         if let identifier = segue.identifier {

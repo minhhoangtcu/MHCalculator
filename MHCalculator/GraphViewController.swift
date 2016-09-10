@@ -28,7 +28,7 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         
         let brain = Brain()
         
-        //print("xMin: \(sender.xMin) \txMax: \(sender.xMax)")
+        print("xMin: \(sender.xMin) \txMax: \(sender.xMax)")
         
         var runner = sender.xMin
         while runner <= sender.xMax {
@@ -43,7 +43,7 @@ class GraphViewController: UIViewController, GraphViewDataSource {
                         y: graphView.axisCenter.y - CGFloat(y) * graphView.pointsPerUnit
                     )
                 )
-                //print("x: \(runner) \ty: \(y)")
+                print("x: \(runner) \ty: \(y)")
             }
             runner += sender.increment
         }
